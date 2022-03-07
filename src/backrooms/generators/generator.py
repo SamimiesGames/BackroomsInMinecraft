@@ -15,13 +15,13 @@ class AGenerator(ABC):
     def to_matrix(self) -> list:
         ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def weight(self) -> list[int, float]:
         ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def row(self) -> list:
         ...
 
