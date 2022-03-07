@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-import random
-
 from backrooms.utils.randomizers import chance
 
 
@@ -29,7 +27,10 @@ class AGenerator(ABC):
 @dataclass
 class Generator(AGenerator):
     def to_matrix(self) -> list:
-        matrix = [[self.row] * self.resolution[0]]
+        matrix = []
+
+        for y in range(self.resolution[1]):
+            matrix.append(self.row)
 
         return matrix
 
@@ -37,7 +38,7 @@ class Generator(AGenerator):
     def row(self) -> list:
         row = []
 
-        for x in range(self.resolution[1]):
+        for x in range(self.resolution[0]):
             row.append(self.weight)
 
         return row
@@ -45,11 +46,10 @@ class Generator(AGenerator):
     @property
     def weight(self):
         wt = 0
-        for index, weight in enumerate(self.weights):
-            key, value = weight
-
-            if chance(key):
+        for likelyhood, value in self.weights.items():
+            if chance(likelyhood):
                 wt = value
+                break
 
         return wt
 
